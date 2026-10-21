@@ -1,0 +1,199 @@
+{
+  "WEBSITE": {
+    "HERO": {
+      "BADGE": "Progress-Focused Learning",
+      "TITLE": "Welcome on",
+      "SUBTITLE": "Learn languages the way you want, wherever you want.",
+      "DESCRIPTION": "Master any language with cognitive clarity and scientifically backed methods.",
+      "REGISTER": "Register",
+      "LOGIN": "Log In"
+    },
+    "HOW_IT_WORKS": {
+      "TITLE": "How It Works",
+      "DESCRIPTION": "Discover the intuitive steps to mastering a new language at your own pace with our progress-first philosophy.",
+      "FEATURES": {
+        "CHOOSE_ANYWHERE": {
+          "TITLE": "Learn Anywhere",
+          "DESCRIPTION": "Choose from over 5 languages. Whether at home or on the go, your progress stays synchronized across all your devices."
+        },
+        "SMART_QUIZZES": {
+          "TITLE": "Smart Quizzes",
+          "DESCRIPTION": "Our AI adapts to your learning speed, generating personalized vocabulary quizzes that challenge you just enough."
+        },
+        "TRACK_PROGRESS": {
+          "TITLE": "Track Progress",
+          "DESCRIPTION": "Visual data dashboards show your vocabulary growth and fluency levels in real time. No more guessing."
+        }
+      }
+    },
+    "HOW_TO_USE_IT": {
+      "TITLE": "How It Works",
+      "PICK_YOUR_WORDS": {
+        "TITLE": "Pick Your Words",
+        "DESCRIPTION": "Choose words from your personal list. Our placement quiz makes sure you start at exactly the right level for you."
+      },
+      "CREATE_YOUR_QUIZ": {
+        "TITLE": "Create Your Quiz",
+        "DESCRIPTION": "Click the button to generate your quiz instantly. You can start right away or create another quiz anytime."
+      },
+      "UNLOCK_YOUR_QUIZ": {
+        "TITLE": "Start Your Quiz",
+        "DESCRIPTION": "Go through your quiz as often as you like and practice at your own pace."
+      }
+    },
+    "CTA": {
+      "TITLE": "Start Your Journey Today",
+      "DESCRIPTION": "Join thousands of learners who are already breaking language barriers with QuizWord.",
+      "BUTTON": "Create Free Account"
+    }
+  },
+  "NAVBAR": {
+    "CATEGORIES": "Categories",
+    "ALL_WORDS": "All Words",
+    "NEW": "New",
+    "QUIZZES": "Quizzes"
+  },
+  "VOCABULARY_CATEGORIES": {
+    "TITLE": "Vocabulary Categories",
+    "DESCRIPTION": "Organize your learning journey by topic and difficulty."
+  },
+  "ADD_NEW_CATEGORY_BUTTON": {
+    "TITLE_1": "Category",
+    "TITLE_2": "Add New Category",
+    "DESCRIPTION": "Create a custom study list"
+  },
+  "ADD_NEW_CATEGORY": {
+    "TITLE": "Add New Category",
+    "LANGUAGE": "Language",
+    "DESCRIPTION": "Organize your vocabulary by topics or themes.",
+    "CATEGORY_NAME": "Category Name: ",
+    "CATEGORY_HINT": "Short, descriptive names work best for navigation."
+  },
+  "EDIT_CATEGORY": {
+    "TITLE": "Edit Category",
+    "LANGUAGE": "Language",
+    "DESCRIPTION": "Organize your vocabulary by topics or themes.",
+    "CATEGORY_NAME": "Category Name: ",
+    "CATEGORY_HINT": "Short, descriptive names work best for navigation."
+  },
+  "YOUR_VOCABULARY": {
+    "TITLE": "Your Vocabulary",
+    "DESCRIPTION": "Organize and track your learning progress. Manage definitions, categories, and review schedules for all your saved expressions.",
+    "RANK": "Rank",
+    "WORD_TRANSLATION": "Word & Translation",
+    "CATEGORY": "Category",
+    "STREAK": "Streak",
+    "ACTIONS": "Actions"
+  },
+  "ADD_NEW_WORD": {
+    "TITLE": "Add New Word",
+    "DESCRIPTION": "Expand your vocabulary with context and mnemonics.",
+    "SOURCE_WORD": "Source Word",
+    "TARGET_WORD": "Target Word",
+    "TERM": "Term",
+    "LANGUAGE": "Language",
+    "TIP": "Tip (Optional)",
+    "TIP_PLACEHOLDER": "Visualize a spring bouncing back",
+    "EXAMPLE_SENTENCE": "Example Sentence (Optional)",
+    "EXAMPLE_SENTENCE_PLACEHOLDER": "Her resilience after the setback was admirable.",
+    "PRO_TIP": "Pro Tip",
+    "PRO_TIP_TEXT": "Adding an example sentence helps our AI generate better flashcard variations for your next study session."
+  },
+  "ACTIVE_QUIZZES": {
+    "TITLE": "Active Quizzes",
+    "DESCRIPTION": "Continue your learning journey. Test your knowledge on recently added vocabulary or focus on your weak areas.",
+    "LAST_UPDATED": "Last Updated"
+  },
+  "ALL_QUIZ_WORDS": {
+    "TITLE": "Your Vocabulary",
+    "DESCRIPTION": "Organize and track your learning progress. Manage definitions, categories, and review schedules for all your saved expressions.",
+    "RANK": "Rank",
+    "WORD_TRANSLATION": "Word & Translation",
+    "CATEGORY": "Category",
+    "STREAK": "Streak",
+    "ACTIONS": "Actions",
+    "SCORE": "Score",
+    "DIRECTION": "Direction",
+    "DATE": "Date",
+    "DETAILS": "Actions",
+    "VOCABULARY_DETAILS": "Vocabulary Details",
+    "DETAILS_HINT_1": "Click on",
+    "DETAILS_HINT_2": " to see the details."
+  },
+  "FOOTER": {
+    "DESCRIPTION": "Empowering progress through language.",
+    "IMPRINT": "Legal Notice",
+    "PRIVACY_POLICY": "Privacy Policy",
+    "FAQ": "FAQ",
+    "CONTACT": "Contact Us"
+  },
+  "HEADER": {
+    "HOW_IT_WORKS": "How It Works",
+    "HOW_TO_USE_IT": "How to use it",
+    "SUCCESS": "success-stories",
+    "PRICE": "Price"
+  },
+  "BUTTONS": {
+    "CANCEL": "Cancel",
+    "SAVE": "Save",
+    "CHANGE": "Change",
+    "REMOVE": "Remove"
+  },
+  "QUIZ_RESULTS": {
+    "WORD": "WORD",
+    "ANSWER": "ANSWER",
+    "MEANING": "MEANING"
+  },
+  "CONTACT": {
+    "TITLE": "Contact",
+    "TITLE_H3": "Would you like to discuss something?",
+    "DESCRIPTION_1": "Do you need a new feature in Quiz Word?",
+    "DESCRIPTION_2": "Please send us a message. I’ll be happy to help bring your ideas to life.",
+    "DESCRIPTION_3": "Contact us!",
+    "FORM_NAME": "Your name",
+    "FORM_NAME_REQUIED": "Your name is required.",
+    "FORM_E_MAIL": "Your email",
+    "FORM_E_MAIL_REQUIED": "Your email is required.",
+    "FORM_MESSAGE": "Your message",
+    "FORM_MESSAGE_REQUIED": "Your message is empty.",
+    "PRIVACY_1": "I've read the",
+    "PRIVACY_2": "privacy policy",
+    "PRIVACY_3": "and agree to the processing of my data as outlined.",
+    "PRIVACY_POLICY": "<h3>Privacy Policy</h3><h4>Welcome to my website</h4><p>Protecting your personal data is important to me. This privacy policy describes how I collect, use, and protect your data.</p><h4>Contact Form</h4><p>If you use the contact form on my website, the data you provide (name, email address, and message) will be used solely for the purpose of contacting you. This data will not be shared with third parties.</p><h4>Use of Data</h4><p>The collected data is used exclusively for the following purposes:</p><ul><li>Contacting you and responding to your inquiries.</li><li>Registering and using the project pages.</li></ul><h4>Project Pages</h4><h5>Join Project</h5><p>This is a task manager modeled after a Kanban board. There is an option for registration, login, and guest access. This data is used only for demonstration purposes to view the project.</p><h5>El Pollo Loco</h5><p>A game developed in JavaScript. No registration is required here.</p><h4>Data Sharing</h4><p>Your personal data will not be shared with third parties unless required by law.</p><h4>Note on German Law</h4><p>This privacy policy refers to the legal provisions of the German Data Protection Act (GDPR).</p><p>If you have any questions or concerns about data protection, you can contact me via email at <a href='mailto:contact@damianpoloczek.com'>contact&#64;damianpoloczek.com</a>.</p>",
+    "CHECKBOX": "Please accept the privacy policy."
+  },
+  "MOBILE": {
+    "HOME": "Home",
+    "HOME_LABEL": "Quiz Word home",
+    "LANGUAGE": "Language",
+    "BOARD_LABEL": "Quiz Word learning overview",
+    "BOARD_CAPTION": "Your words. Your pace. Your progress.",
+    "PRICE_TITLE": "Pricing",
+    "FREE": "Quiz Word is completely free.",
+    "CONTACT_OPEN": "Open contact form ↗",
+    "CONTACT_NOTE": "The contact form opens on our website.",
+    "FAQ_TITLE": "Frequently asked questions",
+    "FAQ": {
+      "WHAT": {
+        "QUESTION": "What is Quiz Word?",
+        "ANSWER": "Quiz Word is your personal vocabulary database where you can save all the words you want to learn. You can create as many quizzes as you like from these words."
+      },
+      "COST": {
+        "QUESTION": "How much does Quiz Word cost?",
+        "ANSWER": "Quiz Word is completely free."
+      },
+      "WHO": {
+        "QUESTION": "Who is Quiz Word for?",
+        "ANSWER": "Quiz Word was created for everyone who enjoys learning languages."
+      }
+    },
+    "FONT_ERROR": "The font could not be loaded. Please restart the app.",
+    "LOADING": "Loading app",
+    "LOGIN": "Login",
+    "SHARE": "Share",
+    "EMAIL": "Email",
+    "SHARE_TEXT": "Check out Quiz Word!",
+    "LINK_COPIED": "Link copied.",
+    "SHARE_ERROR": "Sharing is unavailable right now. Visit quiz-word.com to copy the link."
+  }
+}
