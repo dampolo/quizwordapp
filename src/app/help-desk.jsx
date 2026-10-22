@@ -6,7 +6,7 @@ import { styles } from "../styles/styles";
 
 export default function HelpDesk() {
   const { t } = useTranslation();
-  const [open, setOpen] = useState(0);
+  const [open, setOpen] = useState();
   return (
     <PublicLayout>
       <View style={[styles.container, styles.section]}>
