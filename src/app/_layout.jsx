@@ -3,26 +3,18 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useFonts } from "expo-font";
-import { Text, View } from "react-native";
-import { useTranslation } from "react-i18next";
+import { View } from "react-native";
 import { fontAssets } from "../assets/fonts";
 import PreLoader from "../components/PreLoader/pre-loader";
 import { resets } from "../styles/resets";
 
 export default function RootLayout() {
-  const [fontsLoaded, fontError] = useFonts(fontAssets);
-  const { t } = useTranslation();
+  const [fontsLoaded] = useFonts(fontAssets);
 
   if (!fontsLoaded) {
     return (
       <View style={resets.loading}>
-        {fontError ? (
-          <Text accessibilityRole="alert" style={resets.loadError}>
-            {t("MOBILE.FONT_ERROR")}
-          </Text>
-        ) : (
-          <PreLoader />
-        )}
+        <PreLoader />
       </View>
     );
   }

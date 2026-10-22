@@ -17,5 +17,9 @@ export const resets = StyleSheet.create({
     backgroundColor: colors.qwFourth,
     padding: 24,
   },
-  loadError: { fontSize: 16, color: colors.qwBodyTextColor, textAlign: "center" },
+  loadError: {
+    fontSize: 16,
+    color: colors.qwBodyTextColor,
+    textAlign: "center",
+  },
 });
