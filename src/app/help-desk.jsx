@@ -1,51 +1,16 @@
 import { useState } from "react";
-import { Stack, router } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 import PublicLayout from "../layouts/PublicLayout";
 import { styles } from "../styles/styles";
-import ArrowLeft from "../../assets/icons/arrow-left.svg";
-
-import { colors } from "../styles/basic";
-
-function handleGoBack() {
-  if (router.canGoBack()) {
-    router.back();
-  } else {
-    router.replace("/");
-  }
-}
+import ScreenHeader from "../components/ScreenHeader/screen-header";
 
 export default function HelpDesk() {
   const { t } = useTranslation();
   const [open, setOpen] = useState();
   return (
     <>
-      <Stack.Screen
-        options={{
-          headerShown: true,
-          title: "Help Desk",
-          headerTitleAlign: "center",
-          headerBackVisible: false,
-          headerShadowVisible: false,
-          headerStyle: {
-            backgroundColor: colors.qwThird,
-          },
-          headerLeft: () => (
-            <Pressable
-              accessibilityRole="button"
-              accessibilityLabel={t("MOBILE.GO_BACK")}
-              hitSlop={12}
-              style={({ hovered, pressed }) => ({
-                opacity: hovered || pressed ? 0.6 : 1,
-              })}
-              onPress={handleGoBack}
-            >
-              <ArrowLeft width={32} height={32} />
-            </Pressable>
-          ),
-        }}
-      />
+      <ScreenHeader title="Help Desk" />
       <PublicLayout showHeader={false}>
         <View style={[styles.container, styles.section]}>
           <Text accessibilityRole="header" style={styles.heading}>

@@ -35,7 +35,7 @@ export default function Footer() {
           <Text style={footer.copyright}>© {new Date().getFullYear()} Quiz Word. {t('FOOTER.DESCRIPTION')}</Text>
         </View>
         <View style={footer.links}>
-          <Link href="https://quiz-word.com/imprint" style={footer.link}>{t('FOOTER.IMPRINT')}</Link>
+          <Link href="/imprint" style={footer.link}>{t('FOOTER.IMPRINT')}</Link>
           <Link href="https://quiz-word.com/privacy-policy" style={footer.link}>{t('FOOTER.PRIVACY_POLICY')}</Link>
           <Link href="/help-desk" style={footer.link}>{t('FOOTER.FAQ')}</Link>
           <Link href="/contact" style={footer.link}>{t('FOOTER.CONTACT')}</Link>
