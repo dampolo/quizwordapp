@@ -3,10 +3,10 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useFonts } from "expo-font";
-import { ActivityIndicator, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { useTranslation } from "react-i18next";
 import { fontAssets } from "../assets/fonts";
-import { colors } from "../styles/basic";
+import PreLoader from "../components/PreLoader/pre-loader";
 import { resets } from "../styles/resets";
 
 export default function RootLayout() {
@@ -21,10 +21,7 @@ export default function RootLayout() {
             {t("MOBILE.FONT_ERROR")}
           </Text>
         ) : (
-          <ActivityIndicator
-            color={colors.qwPrimary}
-            accessibilityLabel={t("MOBILE.LOADING")}
-          />
+          <PreLoader />
         )}
       </View>
     );
