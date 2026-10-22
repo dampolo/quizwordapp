@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import { colors } from "../../styles/basic";
 import { fonts } from "../../assets/fonts";
 
-export const styles = StyleSheet.create({
+export const footer = StyleSheet.create({
   footer: {
     borderTopWidth: 1,
     borderTopColor: colors.border,

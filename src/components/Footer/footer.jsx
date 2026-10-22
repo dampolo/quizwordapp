@@ -5,8 +5,8 @@ import { Platform, Pressable, Share, Text, useWindowDimensions, View } from 'rea
 import Mail from '../../../assets/icons/mail.svg';
 import ShareIcon from '../../../assets/icons/share.svg';
 import { colors } from '../../styles/basic';
-import { styles as shared } from '../../styles/styles';
-import { styles as s } from './footer.styles';
+import { styles } from '../../styles/styles';
+import { footer } from './footer.styles';
 
 export default function Footer() {
   const { t } = useTranslation();
@@ -28,29 +28,29 @@ export default function Footer() {
   }
 
   return (
-    <View style={s.footer}>
-      <View style={[shared.container, s.container, !compact && s.desktop]}>
-        <View style={s.brandGroup}>
-          <Text style={s.brand}>Quiz Word</Text>
-          <Text style={s.copyright}>© {new Date().getFullYear()} Quiz Word. {t('FOOTER.DESCRIPTION')}</Text>
+    <View style={footer.footer}>
+      <View style={[styles.container, footer.container, !compact && footer.desktop]}>
+        <View style={footer.brandGroup}>
+          <Text style={footer.brand}>Quiz Word</Text>
+          <Text style={footer.copyright}>© {new Date().getFullYear()} Quiz Word. {t('FOOTER.DESCRIPTION')}</Text>
         </View>
-        <View style={s.links}>
-          <Link href="https://quiz-word.com/imprint" style={s.link}>{t('FOOTER.IMPRINT')}</Link>
-          <Link href="https://quiz-word.com/privacy-policy" style={s.link}>{t('FOOTER.PRIVACY_POLICY')}</Link>
-          <Link href="/help-desk" style={s.link}>{t('FOOTER.FAQ')}</Link>
-          <Link href="/contact" style={s.link}>{t('FOOTER.CONTACT')}</Link>
+        <View style={footer.links}>
+          <Link href="https://quiz-word.com/imprint" style={footer.link}>{t('FOOTER.IMPRINT')}</Link>
+          <Link href="https://quiz-word.com/privacy-policy" style={footer.link}>{t('FOOTER.PRIVACY_POLICY')}</Link>
+          <Link href="/help-desk" style={footer.link}>{t('FOOTER.FAQ')}</Link>
+          <Link href="/contact" style={footer.link}>{t('FOOTER.CONTACT')}</Link>
         </View>
-        <View style={s.socials}>
-          <Pressable accessibilityRole="button" accessibilityLabel={t('MOBILE.SHARE')} onPress={handleShare} style={s.social}>
+        <View style={footer.socials}>
+          <Pressable accessibilityRole="button" accessibilityLabel={t('MOBILE.SHARE')} onPress={handleShare} style={footer.social}>
             <ShareIcon width={24} height={24} color={colors.primary} aria-hidden />
           </Pressable>
           <Link href="mailto:support@quiz-word.com" asChild>
-            <Pressable accessibilityRole="link" accessibilityLabel={t('MOBILE.EMAIL')} style={s.social}>
+            <Pressable accessibilityRole="link" accessibilityLabel={t('MOBILE.EMAIL')} style={footer.social}>
               <Mail width={24} height={24} color={colors.primary} aria-hidden />
             </Pressable>
           </Link>
         </View>
-        {!!feedback && <Text accessibilityLiveRegion="polite" style={s.feedback}>{feedback}</Text>}
+        {!!feedback && <Text accessibilityLiveRegion="polite" style={footer.feedback}>{feedback}</Text>}
       </View>
     </View>
   );

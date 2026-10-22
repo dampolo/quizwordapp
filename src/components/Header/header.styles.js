@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import { colors, radius } from "../../styles/basic";
 import { fonts } from "../../assets/fonts";
 
-export const styles = StyleSheet.create({
+export const header = StyleSheet.create({
   header: {
     paddingVertical: 20,
     borderBottomWidth: 1,

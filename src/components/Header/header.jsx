@@ -3,35 +3,35 @@ import { useTranslation } from 'react-i18next';
 import { Pressable, Text, useWindowDimensions, View } from 'react-native';
 import Button from '../Button/button';
 import Logo from '../Logo/logo';
-import { styles as shared } from '../../styles/styles';
-import { styles as s } from './header.styles';
+import { styles } from '../../styles/styles';
+import { header } from './header.styles';
 
 export default function Header() {
   const { t, i18n } = useTranslation();
   const compact = useWindowDimensions().width <= 992;
 
   return (
-    <View style={s.header}>
-      <View style={[shared.container, compact && s.mobileContainer]}>
-        <View style={s.row}>
+    <View style={header.header}>
+      <View style={[styles.container, compact && header.mobileContainer]}>
+        <View style={header.row}>
           <Link href="/" asChild>
-            <Pressable accessibilityRole="link" accessibilityLabel={t('MOBILE.HOME_LABEL')} style={s.brandLink}>
+            <Pressable accessibilityRole="link" accessibilityLabel={t('MOBILE.HOME_LABEL')} style={header.brandLink}>
               <Logo size={compact ? 80 : 56} />
-              {!compact && <Text style={s.brand}>Quiz Word</Text>}
+              {!compact && <Text style={header.brand}>Quiz Word</Text>}
             </Pressable>
           </Link>
-          <Link href="https://quiz-word.com/login" style={[s.link, compact && s.mobileLogin]}>
+          <Link href="https://quiz-word.com/login" style={[header.link, compact && header.mobileLogin]}>
             {t('MOBILE.LOGIN')}
           </Link>
         </View>
-        {!compact && <View style={s.navigation}>
-          <Link href="/" style={s.link}>{t('MOBILE.HOME')}</Link>
-          <Link href="/price" style={s.link}>{t('HEADER.PRICE')}</Link>
-          <Link href="/help-desk" style={s.link}>{t('FOOTER.FAQ')}</Link>
-          <Link href="/contact" style={s.link}>{t('FOOTER.CONTACT')}</Link>
+        {!compact && <View style={header.navigation}>
+          <Link href="/" style={header.link}>{t('MOBILE.HOME')}</Link>
+          <Link href="/price" style={header.link}>{t('HEADER.PRICE')}</Link>
+          <Link href="/help-desk" style={header.link}>{t('FOOTER.FAQ')}</Link>
+          <Link href="/contact" style={header.link}>{t('FOOTER.CONTACT')}</Link>
         </View>}
-        {!compact && <View style={s.actions}>
-          <View style={s.languages} accessibilityLabel={t('MOBILE.LANGUAGE')}>
+        {!compact && <View style={header.actions}>
+          <View style={header.languages} accessibilityLabel={t('MOBILE.LANGUAGE')}>
             {['de', 'en'].map((language) => (
               <Pressable
                 key={language}
@@ -40,7 +40,7 @@ export default function Header() {
                 accessibilityState={{ selected: i18n.resolvedLanguage === language }}
                 onPress={() => i18n.changeLanguage(language)}
               >
-                <Text style={[s.link, i18n.resolvedLanguage === language && s.activeLanguage]}>
+                <Text style={[header.link, i18n.resolvedLanguage === language && header.activeLanguage]}>
                   {language.toUpperCase()}
                 </Text>
               </Pressable>

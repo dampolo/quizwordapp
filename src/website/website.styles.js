@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { styles as shared } from "../styles/styles";
+import { styles } from "../styles/styles";
 import { colors, radius } from "../styles/basic";
 import { fonts } from "../assets/fonts";
 
@@ -8,8 +8,8 @@ export function createWebsiteStyles(width, height) {
   const compact = width <= 992;
 
   return StyleSheet.create({
-    ...shared,
-    container: { ...shared.container, paddingHorizontal: mobile ? 20 : 32 },
+    ...styles,
+    container: { ...styles.container, paddingHorizontal: mobile ? 20 : 32 },
     hero: {
       backgroundColor: colors.hero,
       minHeight: height,
@@ -98,7 +98,6 @@ export function createWebsiteStyles(width, height) {
       alignItems: compact ? "center" : "stretch",
       gap: 32,
       paddingVertical: mobile ? 32 : 0,
-      paddingHorizontal: mobile ? 26 : 0,
     },
     featureCard: {
       width: compact ? "100%" : undefined,
@@ -221,7 +220,6 @@ export function createWebsiteStyles(width, height) {
       paddingVertical: mobile ? 80 : 120,
     },
     journey: {
-      marginHorizontal: 16,
       paddingVertical: mobile ? 70 : 90,
       paddingHorizontal: mobile ? 24 : 40,
       borderRadius: radius,

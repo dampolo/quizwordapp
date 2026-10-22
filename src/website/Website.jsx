@@ -9,13 +9,6 @@ import { colors } from "../styles/basic";
 import World from "../../assets/icons/world.svg";
 import Progress from "../../assets/icons/progress.svg";
 
-const features = ["CHOOSE_ANYWHERE", "SMART_QUIZZES", "TRACK_PROGRESS"];
-const featureIcons = [World, Progress, Progress];
-const featureColors = ["#ede9fe", "#d1fae5", "#fde7c7"];
-// Match the reference cards' minimum word widths without splitting headings.
-const featureMinimumWidths = [193, 218, 203];
-const steps = ["PICK_YOUR_WORDS", "CREATE_YOUR_QUIZ", "UNLOCK_YOUR_QUIZ"];
-
 export default function Website() {
   const { t } = useTranslation();
   const { width, height } = useWindowDimensions();
@@ -73,38 +66,39 @@ export default function Website() {
             </Text>
           </View>
           <View style={s.cards}>
-            {features.map((feature, index) => {
-              const FeatureIcon = featureIcons[index];
-              return (
-                <View
-                  key={feature}
-                  style={[
-                    s.featureCard,
-                    compact && { minWidth: featureMinimumWidths[index] },
-                  ]}
-                >
-                  <View
-                    style={[
-                      s.featureIcon,
-                      { backgroundColor: featureColors[index] },
-                    ]}
-                  >
-                    <FeatureIcon
-                      width={24}
-                      height={24}
-                      color={colors.primary}
-                      aria-hidden
-                    />
-                  </View>
-                  <Text accessibilityRole="header" style={s.featureTitle}>
-                    {t(`WEBSITE.HOW_IT_WORKS.FEATURES.${feature}.TITLE`)}
-                  </Text>
-                  <Text style={s.featureDescription}>
-                    {t(`WEBSITE.HOW_IT_WORKS.FEATURES.${feature}.DESCRIPTION`)}
-                  </Text>
-                </View>
-              );
-            })}
+            <View style={[s.featureCard, compact && { minWidth: 193 }]}>
+              <View style={[s.featureIcon, { backgroundColor: "#ede9fe" }]}>
+                <World width={24} height={24} color={colors.primary} aria-hidden />
+              </View>
+              <Text accessibilityRole="header" style={s.featureTitle}>
+                {t("WEBSITE.HOW_IT_WORKS.FEATURES.CHOOSE_ANYWHERE.TITLE")}
+              </Text>
+              <Text style={s.featureDescription}>
+                {t("WEBSITE.HOW_IT_WORKS.FEATURES.CHOOSE_ANYWHERE.DESCRIPTION")}
+              </Text>
+            </View>
+            <View style={[s.featureCard, compact && { minWidth: 218 }]}>
+              <View style={[s.featureIcon, { backgroundColor: "#d1fae5" }]}>
+                <Progress width={24} height={24} color={colors.primary} aria-hidden />
+              </View>
+              <Text accessibilityRole="header" style={s.featureTitle}>
+                {t("WEBSITE.HOW_IT_WORKS.FEATURES.SMART_QUIZZES.TITLE")}
+              </Text>
+              <Text style={s.featureDescription}>
+                {t("WEBSITE.HOW_IT_WORKS.FEATURES.SMART_QUIZZES.DESCRIPTION")}
+              </Text>
+            </View>
+            <View style={[s.featureCard, compact && { minWidth: 203 }]}>
+              <View style={[s.featureIcon, { backgroundColor: "#fde7c7" }]}>
+                <Progress width={24} height={24} color={colors.primary} aria-hidden />
+              </View>
+              <Text accessibilityRole="header" style={s.featureTitle}>
+                {t("WEBSITE.HOW_IT_WORKS.FEATURES.TRACK_PROGRESS.TITLE")}
+              </Text>
+              <Text style={s.featureDescription}>
+                {t("WEBSITE.HOW_IT_WORKS.FEATURES.TRACK_PROGRESS.DESCRIPTION")}
+              </Text>
+            </View>
           </View>
         </View>
       </View>
@@ -125,19 +119,39 @@ export default function Website() {
             <Text accessibilityRole="header" style={s.workflowTitle}>
               {t("WEBSITE.HOW_TO_USE_IT.TITLE")}
             </Text>
-            {steps.map((step, index) => (
-              <View key={step} style={s.step}>
-                <Text style={s.number}>{index + 1}</Text>
-                <View style={s.stepText}>
-                  <Text accessibilityRole="header" style={s.stepTitle}>
-                    {t(`WEBSITE.HOW_TO_USE_IT.${step}.TITLE`)}
-                  </Text>
-                  <Text style={s.stepDescription}>
-                    {t(`WEBSITE.HOW_TO_USE_IT.${step}.DESCRIPTION`)}
-                  </Text>
-                </View>
+            <View style={s.step}>
+              <Text style={s.number}>1</Text>
+              <View style={s.stepText}>
+                <Text accessibilityRole="header" style={s.stepTitle}>
+                  {t("WEBSITE.HOW_TO_USE_IT.PICK_YOUR_WORDS.TITLE")}
+                </Text>
+                <Text style={s.stepDescription}>
+                  {t("WEBSITE.HOW_TO_USE_IT.PICK_YOUR_WORDS.DESCRIPTION")}
+                </Text>
               </View>
-            ))}
+            </View>
+            <View style={s.step}>
+              <Text style={s.number}>2</Text>
+              <View style={s.stepText}>
+                <Text accessibilityRole="header" style={s.stepTitle}>
+                  {t("WEBSITE.HOW_TO_USE_IT.CREATE_YOUR_QUIZ.TITLE")}
+                </Text>
+                <Text style={s.stepDescription}>
+                  {t("WEBSITE.HOW_TO_USE_IT.CREATE_YOUR_QUIZ.DESCRIPTION")}
+                </Text>
+              </View>
+            </View>
+            <View style={s.step}>
+              <Text style={s.number}>3</Text>
+              <View style={s.stepText}>
+                <Text accessibilityRole="header" style={s.stepTitle}>
+                  {t("WEBSITE.HOW_TO_USE_IT.UNLOCK_YOUR_QUIZ.TITLE")}
+                </Text>
+                <Text style={s.stepDescription}>
+                  {t("WEBSITE.HOW_TO_USE_IT.UNLOCK_YOUR_QUIZ.DESCRIPTION")}
+                </Text>
+              </View>
+            </View>
           </View>
         </View>
       </View>
