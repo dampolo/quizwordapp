@@ -1,3 +1,4 @@
+import { AuthProvider } from "../context/auth/AuthProvider";
 import "../i18n/i18n";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -20,9 +21,11 @@ export default function RootLayout() {
   }
 
   return (
-    <SafeAreaProvider>
-      <StatusBar style="dark" />
-      <Stack screenOptions={{ headerShown: false }} />
-    </SafeAreaProvider>
+    <AuthProvider>
+      <SafeAreaProvider>
+        <StatusBar style="dark" />
+        <Stack screenOptions={{ headerShown: false }} />
+      </SafeAreaProvider>
+    </AuthProvider>
   );
 }
