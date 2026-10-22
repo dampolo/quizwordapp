@@ -8,6 +8,7 @@ export const colors = {
   heading: "#111827",
   body: "#4b5563",
   border: "#e5e7eb",
+  // qwThird: "#e5e9fd"
 };
 
 // Native styles use density-independent numbers rather than CSS units.
