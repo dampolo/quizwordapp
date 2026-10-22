@@ -42,11 +42,11 @@ export default function Footer() {
         </View>
         <View style={footer.socials}>
           <Pressable accessibilityRole="button" accessibilityLabel={t('MOBILE.SHARE')} onPress={handleShare} style={footer.social}>
-            <ShareIcon width={24} height={24} color={colors.primary} aria-hidden />
+            <ShareIcon width={24} height={24} color={colors.qwPrimary} aria-hidden />
           </Pressable>
           <Link href="mailto:support@quiz-word.com" asChild>
             <Pressable accessibilityRole="link" accessibilityLabel={t('MOBILE.EMAIL')} style={footer.social}>
-              <Mail width={24} height={24} color={colors.primary} aria-hidden />
+              <Mail width={24} height={24} color={colors.qwPrimary} aria-hidden />
             </Pressable>
           </Link>
         </View>

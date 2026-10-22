@@ -3,9 +3,9 @@ import { colors } from "./basic";
 import { fonts } from "../assets/fonts";
 
 export const resets = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: colors.white },
+  screen: { flex: 1, backgroundColor: colors.qwFourth },
   text: {
-    color: colors.body,
+    color: colors.qwBodyTextColor,
     fontSize: 16,
     lineHeight: 27,
     fontFamily: fonts.regular,
@@ -14,8 +14,8 @@ export const resets = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: colors.white,
+    backgroundColor: colors.qwFourth,
     padding: 24,
   },
-  loadError: { fontSize: 16, color: colors.body, textAlign: "center" },
+  loadError: { fontSize: 16, color: colors.qwBodyTextColor, textAlign: "center" },
 });

@@ -22,7 +22,7 @@ export default function RootLayout() {
           </Text>
         ) : (
           <ActivityIndicator
-            color={colors.primary}
+            color={colors.qwPrimary}
             accessibilityLabel={t("MOBILE.LOADING")}
           />
         )}

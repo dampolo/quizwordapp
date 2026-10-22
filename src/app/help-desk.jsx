@@ -6,6 +6,8 @@ import PublicLayout from "../layouts/PublicLayout";
 import { styles } from "../styles/styles";
 import ArrowLeft from "../../assets/icons/arrow-left.svg";
 
+import { colors } from "../styles/basic";
+
 function handleGoBack() {
   if (router.canGoBack()) {
     router.back();
@@ -27,7 +29,7 @@ export default function HelpDesk() {
           headerBackVisible: false,
           headerShadowVisible: false,
           headerStyle: {
-            backgroundColor: "#e5e9fd",
+            backgroundColor: colors.qwThird,
           },
           headerLeft: () => (
             <Pressable

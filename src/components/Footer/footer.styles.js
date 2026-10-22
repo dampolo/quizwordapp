@@ -5,7 +5,7 @@ import { fonts } from "../../assets/fonts";
 export const footer = StyleSheet.create({
   footer: {
     borderTopWidth: 1,
-    borderTopColor: colors.border,
+    borderTopColor: colors.qwBorderColor,
     paddingVertical: 40,
     backgroundColor: "#f9fafb",
   },
@@ -16,14 +16,14 @@ export const footer = StyleSheet.create({
     fontSize: 28.8,
     lineHeight: 43.2,
     fontFamily: fonts.extraBold,
-    color: colors.primary,
+    color: colors.qwPrimary,
     marginBottom: 10,
   },
   copyright: {
     fontSize: 15.2,
     lineHeight: 25.84,
     fontFamily: fonts.regular,
-    color: colors.body,
+    color: colors.qwBodyTextColor,
     textAlign: "center",
   },
   links: {
@@ -37,7 +37,7 @@ export const footer = StyleSheet.create({
   link: {
     minHeight: 44,
     paddingVertical: 11,
-    color: colors.body,
+    color: colors.qwBodyTextColor,
     fontFamily: fonts.regular,
     fontSize: 15.2,
     lineHeight: 22.8,
@@ -53,7 +53,7 @@ export const footer = StyleSheet.create({
     backgroundColor: "rgba(79,70,229,0.08)",
   },
   feedback: {
-    color: colors.body,
+    color: colors.qwBodyTextColor,
     textAlign: "center",
     fontFamily: fonts.regular,
     fontSize: 14,

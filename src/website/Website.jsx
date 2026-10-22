@@ -68,7 +68,7 @@ export default function Website() {
           <View style={s.cards}>
             <View style={[s.featureCard, compact && { minWidth: 193 }]}>
               <View style={[s.featureIcon, { backgroundColor: "#ede9fe" }]}>
-                <World width={24} height={24} color={colors.primary} aria-hidden />
+                <World width={24} height={24} color={colors.qwPrimary} aria-hidden />
               </View>
               <Text accessibilityRole="header" style={s.featureTitle}>
                 {t("WEBSITE.HOW_IT_WORKS.FEATURES.CHOOSE_ANYWHERE.TITLE")}
@@ -79,7 +79,7 @@ export default function Website() {
             </View>
             <View style={[s.featureCard, compact && { minWidth: 218 }]}>
               <View style={[s.featureIcon, { backgroundColor: "#d1fae5" }]}>
-                <Progress width={24} height={24} color={colors.primary} aria-hidden />
+                <Progress width={24} height={24} color={colors.qwPrimary} aria-hidden />
               </View>
               <Text accessibilityRole="header" style={s.featureTitle}>
                 {t("WEBSITE.HOW_IT_WORKS.FEATURES.SMART_QUIZZES.TITLE")}
@@ -90,7 +90,7 @@ export default function Website() {
             </View>
             <View style={[s.featureCard, compact && { minWidth: 203 }]}>
               <View style={[s.featureIcon, { backgroundColor: "#fde7c7" }]}>
-                <Progress width={24} height={24} color={colors.primary} aria-hidden />
+                <Progress width={24} height={24} color={colors.qwPrimary} aria-hidden />
               </View>
               <Text accessibilityRole="header" style={s.featureTitle}>
                 {t("WEBSITE.HOW_IT_WORKS.FEATURES.TRACK_PROGRESS.TITLE")}
@@ -158,7 +158,7 @@ export default function Website() {
       <View style={s.journeySection} testID="website-journey">
         <View style={s.container}>
           <LinearGradient
-            colors={[colors.secondary, colors.primary]}
+            colors={[colors.qwSecondary, colors.qwPrimary]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={s.journey}

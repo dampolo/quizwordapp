@@ -6,8 +6,8 @@ export const header = StyleSheet.create({
   header: {
     paddingVertical: 20,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border,
-    backgroundColor: colors.white,
+    borderBottomColor: colors.qwBorderColor,
+    backgroundColor: colors.qwFourth,
   },
   mobileContainer: { paddingHorizontal: 32 },
   mobileLogin: {
@@ -25,12 +25,12 @@ export const header = StyleSheet.create({
     gap: 16,
   },
   brandLink: { flexDirection: "row", alignItems: "center", gap: 8 },
-  brand: { fontSize: 23, fontFamily: fonts.extraBold, color: colors.primary },
+  brand: { fontSize: 23, fontFamily: fonts.extraBold, color: colors.qwPrimary },
   navigation: { flexDirection: "row", flexWrap: "wrap", gap: 8, marginTop: 12 },
   link: {
     paddingVertical: 12,
     paddingHorizontal: 10,
-    color: colors.primary,
+    color: colors.qwPrimary,
     fontFamily: fonts.semibold,
     fontSize: 14,
   },
@@ -44,7 +44,7 @@ export const header = StyleSheet.create({
   },
   languages: { flexDirection: "row", gap: 8 },
   activeLanguage: {
-    backgroundColor: colors.hero,
+    backgroundColor: colors.qwThird,
     borderRadius: radius,
     overflow: "hidden",
   },
