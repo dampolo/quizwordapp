@@ -6,6 +6,14 @@ import PublicLayout from "../layouts/PublicLayout";
 import { styles } from "../styles/styles";
 import ArrowLeft from "../../assets/icons/arrow-left.svg";
 
+function handleGoBack() {
+  if (router.canGoBack()) {
+    router.back();
+  } else {
+    router.replace("/");
+  }
+}
+
 export default function HelpDesk() {
   const { t } = useTranslation();
   const [open, setOpen] = useState();
@@ -29,13 +37,7 @@ export default function HelpDesk() {
               style={({ hovered, pressed }) => ({
                 opacity: hovered || pressed ? 0.6 : 1,
               })}
-              onPress={() => {
-                if (router.canGoBack()) {
-                  router.back();
-                } else {
-                  router.replace("/");
-                }
-              }}
+              onPress={handleGoBack}
             >
               <ArrowLeft width={32} height={32} />
             </Pressable>
