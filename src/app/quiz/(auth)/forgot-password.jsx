@@ -130,7 +130,6 @@ export default function ForgotPassword() {
     return <PreLoader />;
   }
 
-
   return (
     <SafeAreaView style={resets.screen}>
       <ScreenHeader title="" fallbackHref="/quiz/(auth)/login-quiz" />
@@ -147,7 +146,10 @@ export default function ForgotPassword() {
             </View>
             <View style={auth.form}>
               <View style={auth.inputContainer}>
-                <Text nativeID="forgot-password-email-label" style={auth.inputLabel}>
+                <Text
+                  nativeID="forgot-password-email-label"
+                  style={auth.inputLabel}
+                >
                   Bitte gib deine E-Mail ein:
                 </Text>
                 <TextInput
