@@ -51,6 +51,13 @@ export const styles = StyleSheet.create({
     fontFamily: fonts.bold,
     textAlign: "center",
   },
+  buttonDisabled: {
+    borderWidth: 1,
+    borderColor: "#cccccc",
+    backgroundColor: "#ccc",
+    cursor: "auto",
+  },
+  buttonTextDisabled: { color: "#666" },
   secondary: {
     backgroundColor: "#d9dcfa",
     borderWidth: 1,
