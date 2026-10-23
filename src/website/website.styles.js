@@ -64,13 +64,18 @@ export function createWebsiteStyles(width, height) {
       marginBottom: 16,
     },
     heroButton: {
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: colors.qwPrimary,
       paddingVertical: 18,
       paddingHorizontal: 34,
       minHeight: 66,
       borderRadius: radius,
     },
-    heroButtonText: { fontSize: 17.6, lineHeight: 26.4 },
+    heroButtonText: { fontSize: 17.6, lineHeight: 26.4, color: colors.qwFourth, fontFamily: fonts.bold, textAlign: "center" },
     heroButtonSecond: {
+      alignItems: "center",
+      justifyContent: "center",
       paddingVertical: 18,
       paddingHorizontal: 34,
       minHeight: 66,
@@ -80,6 +85,8 @@ export function createWebsiteStyles(width, height) {
       borderColor: "#c9c9f4",
     },
     heroButtonSecondText: {
+      fontFamily: fonts.bold,
+      textAlign: "center",
       fontSize: 17.6,
       lineHeight: 26.4,
       color: colors.qwPrimary,
@@ -258,11 +265,16 @@ export function createWebsiteStyles(width, height) {
       marginBottom: 42,
     },
     journeyButton: {
+      minHeight: 52,
+      alignItems: "center",
+      justifyContent: "center",
+      borderRadius: radius,
+      backgroundColor: colors.qwFourth,
       paddingVertical: 18,
       paddingHorizontal: mobile ? 24 : 42,
       width: mobile ? "100%" : undefined,
       alignSelf: mobile ? "stretch" : "center",
     },
-    journeyButtonText: { fontSize: 16, lineHeight: 24, flexShrink: 1 },
+    journeyButtonText: { fontSize: 16, lineHeight: 24, flexShrink: 1, fontFamily: fonts.bold, color: colors.qwPrimary, textAlign: "center" },
   });
 }

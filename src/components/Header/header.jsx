@@ -1,7 +1,6 @@
 import { Link } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { Pressable, Text, useWindowDimensions, View } from 'react-native';
-import Button from '../Button/button';
 import Logo from '../Logo/logo';
 import { styles } from '../../styles/styles';
 import { header } from './header.styles';
@@ -46,7 +45,11 @@ export default function Header() {
               </Pressable>
             ))}
           </View>
-          <Button href="https://quiz-word.com/create-account" label={t('WEBSITE.HERO.REGISTER')} />
+          <Link href="https://quiz-word.com/create-account" asChild>
+            <Pressable accessibilityRole="link" style={header.registerButton}>
+              {({ pressed }) => <Text style={[header.registerButtonText, pressed && styles.pressed]}>{t('WEBSITE.HERO.REGISTER')}</Text>}
+            </Pressable>
+          </Link>
         </View>}
       </View>
     </View>

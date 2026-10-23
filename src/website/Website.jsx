@@ -1,7 +1,7 @@
 import { useMemo } from "react";
-import { Image, Text, useWindowDimensions, View } from "react-native";
+import { Image, Pressable, Text, useWindowDimensions, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import Button from "../components/Button/button";
+import { Link } from "expo-router";
 import PublicLayout from "../layouts/PublicLayout";
 import { useTranslation } from "react-i18next";
 import { createWebsiteStyles } from "./website.styles";
@@ -27,18 +27,16 @@ export default function Website() {
             </Text>
             <Text style={s.description}>{t("WEBSITE.HERO.SUBTITLE")}</Text>
             <View style={s.buttons}>
-              <Button
-                href="https://quiz-word.com/create-account"
-                label={`${t("WEBSITE.HERO.REGISTER")} →`}
-                style={s.heroButton}
-                textStyle={s.heroButtonText}
-              />
-              <Button
-                href="/quiz/(auth)/login-quiz"
-                label={t("WEBSITE.HERO.LOGIN")}
-                style={s.heroButtonSecond}
-                textStyle={s.heroButtonSecondText}
-              />
+              <Link href="https://quiz-word.com/create-account" asChild>
+                <Pressable accessibilityRole="link" style={s.heroButton}>
+                  {({ pressed }) => <Text style={[s.heroButtonText, pressed && s.pressed]}>{`${t("WEBSITE.HERO.REGISTER")} →`}</Text>}
+                </Pressable>
+              </Link>
+              <Link href="/quiz/(auth)/login-quiz" asChild>
+                <Pressable accessibilityRole="link" style={s.heroButtonSecond}>
+                  {({ pressed }) => <Text style={[s.heroButtonSecondText, pressed && s.pressed]}>{t("WEBSITE.HERO.LOGIN")}</Text>}
+                </Pressable>
+              </Link>
             </View>
           </View>
           {!compact && (
@@ -166,13 +164,11 @@ export default function Website() {
               {t("WEBSITE.CTA.TITLE")}
             </Text>
             <Text style={s.journeyText}>{t("WEBSITE.CTA.DESCRIPTION")}</Text>
-            <Button
-              href="https://quiz-word.com/create-account"
-              label={t("WEBSITE.CTA.BUTTON")}
-              light
-              style={s.journeyButton}
-              textStyle={s.journeyButtonText}
-            />
+            <Link href="https://quiz-word.com/create-account" asChild>
+              <Pressable accessibilityRole="link" style={s.journeyButton}>
+                {({ pressed }) => <Text style={[s.journeyButtonText, pressed && s.pressed]}>{t("WEBSITE.CTA.BUTTON")}</Text>}
+              </Pressable>
+            </Link>
           </LinearGradient>
         </View>
       </View>

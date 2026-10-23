@@ -1,6 +1,7 @@
-import { Text, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import Button from '../components/Button/button';
+import { Link } from 'expo-router';
+import { priceStyles } from '../styles/price';
 import PublicLayout from '../layouts/PublicLayout';
 import { styles } from '../styles/styles';
 import { resets } from '../styles/resets';
@@ -14,7 +15,11 @@ export default function Price() {
         <View style={styles.card}>
           <Text style={styles.title}>0 €</Text>
           <Text style={resets.text}>{t('MOBILE.FREE')}</Text>
-          <Button href="https://quiz-word.com/create-account" label={t('WEBSITE.CTA.BUTTON')} />
+          <Link href="https://quiz-word.com/create-account" asChild>
+            <Pressable accessibilityRole="link" style={priceStyles.registerButton}>
+              {({ pressed }) => <Text style={[priceStyles.registerButtonText, pressed && styles.pressed]}>{t('WEBSITE.CTA.BUTTON')}</Text>}
+            </Pressable>
+          </Link>
         </View>
       </View>
     </PublicLayout>
