@@ -20,6 +20,7 @@ import MailIcon from "../../../../assets/icons/mail-icon-input-field.svg";
 import LockIcon from "../../../../assets/icons/pwd-lock-icon-input-field.svg";
 import EyeIcon from "../../../../assets/icons/eye.svg";
 import EyeOffIcon from "../../../../assets/icons/eye-off.svg";
+import ScreenHeader from "../../../components/ScreenHeader/screen-header";
 
 export default function LoginQuiz() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -72,7 +73,7 @@ export default function LoginQuiz() {
 
   return (
     <SafeAreaView style={resets.screen}>
-      <Stack.Screen options={{ title: "Login" }} />
+      <ScreenHeader title=""  />
       <KeyboardAvoidingView
         style={resets.screen}
         behavior={Platform.OS === "ios" ? "padding" : "height"}

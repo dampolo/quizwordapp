@@ -78,7 +78,7 @@ export const auth = StyleSheet.create({
   },
   inputIcon: {
     position: "absolute",
-    top: 38,
+    top: 45,
     left: 0,
     paddingHorizontal: 25,
     justifyContent: "center",
@@ -87,7 +87,7 @@ export const auth = StyleSheet.create({
   warnTxtHight: { height: 55 },
   eyeButton: {
     position: "absolute",
-    top: 36.4,
+    top: 35.5,
     right: 0,
     paddingHorizontal: 25,
     minHeight: 44,

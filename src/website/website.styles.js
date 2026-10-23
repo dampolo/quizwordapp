@@ -70,6 +70,20 @@ export function createWebsiteStyles(width, height) {
       borderRadius: radius,
     },
     heroButtonText: { fontSize: 17.6, lineHeight: 26.4 },
+    heroButtonSecond: {
+      paddingVertical: 18,
+      paddingHorizontal: 34,
+      minHeight: 66,
+      borderRadius: radius,
+      backgroundColor: "#d9dcfa",
+      borderWidth: 1,
+      borderColor: "#c9c9f4",
+    },
+    heroButtonSecondText: {
+      fontSize: 17.6,
+      lineHeight: 26.4,
+      color: colors.qwPrimary,
+    },
     steps: {
       backgroundColor: colors.qwFifth,
       paddingVertical: mobile ? 80 : 120,

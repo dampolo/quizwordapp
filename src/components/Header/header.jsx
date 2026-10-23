@@ -20,7 +20,7 @@ export default function Header() {
               {!compact && <Text style={header.brand}>Quiz Word</Text>}
             </Pressable>
           </Link>
-          <Link href="https://quiz-word.com/login" style={[header.link, compact && header.mobileLogin]}>
+          <Link href="/quiz/(auth)/login-quiz" style={[header.link, compact && header.mobileLogin]}>
             {t('MOBILE.LOGIN')}
           </Link>
         </View>

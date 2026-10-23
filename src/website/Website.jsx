@@ -36,9 +36,8 @@ export default function Website() {
               <Button
                 href="/quiz/(auth)/login-quiz"
                 label={t("WEBSITE.HERO.LOGIN")}
-                secondary
-                style={s.heroButton}
-                textStyle={s.heroButtonText}
+                style={s.heroButtonSecond}
+                textStyle={s.heroButtonSecondText}
               />
             </View>
           </View>
