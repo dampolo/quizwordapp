@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Link } from "expo-router";
+import { router } from "expo-router";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -26,7 +26,6 @@ export default function ForgotPassword() {
   const [formErrors, setFormErrors] = useState({});
   const [focusedField, setFocusedField] = useState(null);
   const [submitting, setSubmitting] = useState(false);
-  const [sent, setSent] = useState(false);
   const submittingRef = useRef(false);
   const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
   const isFormValid = regexEmail.test(formValues.email.trim());
@@ -52,7 +51,7 @@ export default function ForgotPassword() {
   ];
 
   async function recoveryForm() {
-    if (busy || submittingRef.current || sent) return;
+    if (busy || submittingRef.current) return;
     const errors = validateInput(formValues);
     setFormErrors(errors);
     if (Object.keys(errors).length > 0) return;
@@ -61,8 +60,11 @@ export default function ForgotPassword() {
     setSubmitting(true);
     try {
       await forgotPassword({ email: formValues.email.trim() });
-      setSent(true);
       setFormValues(initialValues);
+      router.replace({
+        pathname: "/quiz/(auth)/confirmation",
+        params: { message: "Du kannst jetzt deine E-Mail prüfen." },
+      });
     } catch (error) {
       const response = error?.response?.data || error?.response;
       const message = response?.email?.[0] || response?.detail;
@@ -130,74 +132,6 @@ export default function ForgotPassword() {
     return <PreLoader />;
   }
 
-  function renderContent() {
-    if (sent) {
-      return (
-        <View style={auth.form}>
-          <Text accessibilityLiveRegion="polite" style={auth.description}>
-            Du kannst jetzt deine E-Mail prüfen.
-          </Text>
-          <Link href="/quiz/(auth)/login-quiz" asChild>
-            <Pressable style={styles.button}>
-              <Text style={styles.buttonText}>Anmelden</Text>
-            </Pressable>
-          </Link>
-        </View>
-      );
-    }
-
-    return (
-      <View style={auth.form}>
-        <View style={auth.inputContainer}>
-          <Text nativeID="forgot-password-email-label" style={auth.inputLabel}>
-            Bitte gib deine E-Mail ein:
-          </Text>
-          <TextInput
-            testID="forgot-password-email"
-            accessibilityLabel="Bitte gib deine E-Mail ein:"
-            accessibilityLabelledBy="forgot-password-email-label"
-            style={emailInputStyle}
-            placeholder="beispielname@email.com"
-            autoComplete="email"
-            keyboardType="email-address"
-            autoCapitalize="none"
-            autoCorrect={false}
-            editable={inputsEditable}
-            returnKeyType="send"
-            value={formValues.email}
-            onChangeText={handleEmailChange}
-            onFocus={handleEmailFocus}
-            onBlur={handleBlur}
-            onSubmitEditing={recoveryForm}
-          />
-          <View pointerEvents="none" style={inputIconStyle}>
-            <MailIcon width={24} height={24} />
-          </View>
-          <Text accessibilityLiveRegion="polite" style={auth.warnText}>
-            {formErrors.email}
-          </Text>
-        </View>
-        <Text style={auth.description}>
-          Wir senden Dir eine E-Mail,{"\n"}
-          über die Du dein Passwort ändern kannst.
-        </Text>
-        {renderMessage()}
-        {renderLoader()}
-        <View style={auth.btnContainer}>
-          <Pressable
-            testID="forgot-password-submit"
-            accessibilityRole="button"
-            accessibilityState={{ disabled, busy }}
-            disabled={disabled}
-            onPress={recoveryForm}
-            style={getSubmitStyle}
-          >
-            <Text style={submitTextStyle}>E-Mail senden</Text>
-          </Pressable>
-        </View>
-      </View>
-    );
-  }
 
   return (
     <SafeAreaView style={resets.screen}>
@@ -213,7 +147,55 @@ export default function ForgotPassword() {
                 Passwort vergessen
               </Text>
             </View>
-            {renderContent()}
+            <View style={auth.form}>
+              <View style={auth.inputContainer}>
+                <Text nativeID="forgot-password-email-label" style={auth.inputLabel}>
+                  Bitte gib deine E-Mail ein:
+                </Text>
+                <TextInput
+                  testID="forgot-password-email"
+                  accessibilityLabel="Bitte gib deine E-Mail ein:"
+                  accessibilityLabelledBy="forgot-password-email-label"
+                  style={emailInputStyle}
+                  placeholder="beispielname@email.com"
+                  autoComplete="email"
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  editable={inputsEditable}
+                  returnKeyType="send"
+                  value={formValues.email}
+                  onChangeText={handleEmailChange}
+                  onFocus={handleEmailFocus}
+                  onBlur={handleBlur}
+                  onSubmitEditing={recoveryForm}
+                />
+                <View pointerEvents="none" style={inputIconStyle}>
+                  <MailIcon width={24} height={24} />
+                </View>
+                <Text accessibilityLiveRegion="polite" style={auth.warnText}>
+                  {formErrors.email}
+                </Text>
+              </View>
+              <Text style={auth.description}>
+                Wir senden Dir eine E-Mail,{"\n"}
+                über die Du dein Passwort ändern kannst.
+              </Text>
+              {renderMessage()}
+              {renderLoader()}
+              <View style={auth.btnContainer}>
+                <Pressable
+                  testID="forgot-password-submit"
+                  accessibilityRole="button"
+                  accessibilityState={{ disabled, busy }}
+                  disabled={disabled}
+                  onPress={recoveryForm}
+                  style={getSubmitStyle}
+                >
+                  <Text style={submitTextStyle}>E-Mail senden</Text>
+                </Pressable>
+              </View>
+            </View>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
