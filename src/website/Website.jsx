@@ -34,7 +34,7 @@ export default function Website() {
                 textStyle={s.heroButtonText}
               />
               <Button
-                href="https://quiz-word.com/login"
+                href="/quiz/(auth)/login-quiz"
                 label={t("WEBSITE.HERO.LOGIN")}
                 secondary
                 style={s.heroButton}

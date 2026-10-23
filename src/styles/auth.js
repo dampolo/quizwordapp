@@ -55,6 +55,21 @@ export const auth = StyleSheet.create({
   linkActive: { textDecorationLine: "underline" },
   linkFocus: { borderWidth: 2, borderStyle: "dotted", borderColor: colors.qwPrimary },
   form: { width: "100%", alignItems: "center", gap: 16 },
+  inputLabel: {
+    alignSelf: "flex-start",
+    color: colors.qwBodyTextColor,
+    fontFamily: fonts.regular,
+    fontSize: 16,
+    lineHeight: 24,
+    marginBottom: 8,
+  },
+  warnText: {
+    alignSelf: "flex-start",
+    color: "#b91c1c",
+    fontFamily: fonts.regular,
+    fontSize: 14,
+    minHeight: 24,
+  },
   inputContainer: {
     position: "relative",
     justifyContent: "center",
