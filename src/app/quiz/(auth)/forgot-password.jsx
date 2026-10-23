@@ -20,7 +20,7 @@ import { styles } from "../../../styles/styles";
 import MailIcon from "../../../../assets/icons/mail-icon-input-field.svg";
 
 export default function ForgotPassword() {
-  const { forgotPassword, loading } = useAuth();
+  const { forgotPassword, setConfirmationMessage, loading } = useAuth();
   const initialValues = { email: "" };
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
@@ -60,11 +60,9 @@ export default function ForgotPassword() {
     setSubmitting(true);
     try {
       await forgotPassword({ email: formValues.email.trim() });
+      setConfirmationMessage("Du kannst jetzt deine E-Mail prüfen.");
       setFormValues(initialValues);
-      router.replace({
-        pathname: "/quiz/(auth)/confirmation",
-        params: { message: "Du kannst jetzt deine E-Mail prüfen." },
-      });
+      router.replace("/quiz/(auth)/confirmation");
     } catch (error) {
       const response = error?.response?.data || error?.response;
       const message = response?.email?.[0] || response?.detail;

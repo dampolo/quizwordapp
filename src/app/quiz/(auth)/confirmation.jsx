@@ -1,25 +1,20 @@
-import { Link, useLocalSearchParams } from "expo-router";
+import { Link } from "expo-router";
 import { Pressable, ScrollView, Text, View, useWindowDimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ScreenHeader from "../../../components/ScreenHeader/screen-header";
+import { useAuth } from "../../../context/auth/useAuth";
 import { auth, authCompact, authCompactWidth } from "../../../styles/auth";
 import { resets } from "../../../styles/resets";
 import { styles } from "../../../styles/styles";
 
 export default function Confirmation() {
-  const { message } = useLocalSearchParams();
+  const { confirmationMessage } = useAuth();
   const compact = useWindowDimensions().width <= authCompactWidth;
   const mainAuthStyle = [auth.mainAuth, compact && authCompact.mainAuth];
   const contentStyle = [
     auth.mainContentCustomer,
     compact && authCompact.mainContentCustomer,
   ];
-  const confirmationMessage = getConfirmationMessage();
-
-  function getConfirmationMessage() {
-    if (typeof message === "string" && message.trim()) return message;
-    return "Du kannst jetzt deine E-Mail prüfen.";
-  }
 
   function getButtonStyle({ pressed }) {
     return [styles.button, pressed && auth.pressed];
