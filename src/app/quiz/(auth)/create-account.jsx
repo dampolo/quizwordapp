@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { Link } from "expo-router";
+import { Checkbox } from "expo-checkbox";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -21,126 +22,237 @@ import MailIcon from "../../../../assets/icons/mail-icon-input-field.svg";
 import LockIcon from "../../../../assets/icons/pwd-lock-icon-input-field.svg";
 import EyeIcon from "../../../../assets/icons/eye.svg";
 import EyeOffIcon from "../../../../assets/icons/eye-off.svg";
-
-const fields = [
-  {
-    name: "email",
-    label: "Deine E-Mail",
-    placeholder: "beispielname@email.com",
-  },
-  { name: "password", label: "Passwort", placeholder: "Passwort" },
-  {
-    name: "repeated_password",
-    label: "Wiederhole dein Passwort",
-    placeholder: "Wiederhole dein Passwort",
-  },
-];
-
-function validate(values) {
-  const errors = {};
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test(values.email.trim())) {
-    errors.email = "E-Mail ist unvollständig/inkorrekt.";
-  }
-  if (
-    !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%+\-/*?&#])[A-Za-z\d@$!%+\-/*?&#]{10,}$/.test(
-      values.password,
-    )
-  ) {
-    errors.password =
-      "Mindestens 10 Zeichen erforderlich: ein Klein- u. ein Großbuchstabe, eine Zahl und ein Sonderzeichen.";
-  }
-  if (values.password !== values.repeated_password) {
-    errors.repeated_password = "Passwörter stimmen nicht überein.";
-  }
-  if (!values.checked)
-    errors.checked = "Bitte akzeptiere die Datenschutzerklärung.";
-  return errors;
-}
+import { colors } from "../../../styles/basic";
 
 export default function CreateAccount() {
-  const [values, setValues] = useState({
+  const initialValues = {
     email: "",
     password: "",
     repeated_password: "",
     checked: false,
-  });
+  };
   const [touched, setTouched] = useState({});
-  const [visible, setVisible] = useState({});
-  const [focusedField, setFocusedField] = useState(null);
-  const [message, setMessage] = useState("");
+  const [formValues, setFormValues] = useState(initialValues);
+  const [isPasswordTopVisible, togglePasswordVisibilityTop] = useState(false);
+  const [isPasswordBottomVisible, togglePasswordVisibilityBottom] =
+    useState(false);
+  const [formErrors, setFormErrors] = useState({});
+  const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+  const regexPassword =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%+\-/*?&#])[A-Za-z\d@$!%+\-/*?&#]{10,}$/;
+
+  const { createAccount, loading } = useAuth();
   const [registered, setRegistered] = useState(false);
+  const [message, setMessage] = useState("");
+  const [focusedField, setFocusedField] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const submittingRef = useRef(false);
   const inputRefs = useRef({});
-  const { createAccount, loading } = useAuth();
   const compact = useWindowDimensions().width <= authCompactWidth;
   const busy = loading || submitting;
-  const errors = validate(values);
-  const disabled = busy || Object.keys(errors).length > 0;
 
-  function markTouched(name) {
-    setTouched((previous) => ({ ...previous, [name]: true }));
-  }
+  const isFormValid = Object.keys(validateInput(formValues)).length === 0;
 
   async function handleSubmit() {
     if (busy || submittingRef.current || registered) return;
-    setTouched({
-      email: true,
-      password: true,
-      repeated_password: true,
-      checked: true,
-    });
-    if (Object.keys(errors).length) return;
+
+    const errors = validateInput(formValues);
+
+    setFormErrors(errors);
+
+    if (Object.keys(errors).length > 0) {
+      return;
+    }
+
+    await submitAccount(formValues);
+  }
+
+  async function submitAccount(values) {
     submittingRef.current = true;
     setSubmitting(true);
     setMessage("");
     try {
-      await createAccount({ ...values, email: values.email.trim() });
+      await createAccount(values);
       setRegistered(true);
-      setValues({
-        email: "",
-        password: "",
-        repeated_password: "",
-        checked: false,
-      });
-    } catch (error) {
-      const response = error?.response?.data || error?.response;
-      const detail =
-        response?.email?.[0] ||
-        response?.password?.[0] ||
-        response?.repeated_password?.[0] ||
-        response?.detail;
-      setMessage(
-        typeof detail === "string"
-          ? detail
-          : "Konto konnte nicht erstellt werden. Bitte versuche es erneut.",
-      );
+    } catch (err) {
+      const message =
+        (err.response?.data || err.response)?.email?.[0] ||
+        (err.response?.data || err.response)?.password?.[0] ||
+        (err.response?.data || err.response)?.detail ||
+        "Account creation failed";
+
+      setMessage(message);
     } finally {
       submittingRef.current = false;
       setSubmitting(false);
     }
   }
 
+  function handleChange(name, value) {
+    setFormValues((previousValues) => ({
+      ...previousValues,
+      [name]: value,
+    }));
+  }
+
+  function handleBlur(name) {
+    setFocusedField(null);
+
+    const newTouched = {
+      ...touched,
+      [name]: true,
+    };
+
+    setTouched(newTouched);
+    setFormErrors(validateInput(formValues, newTouched));
+  }
+
+  function validateInput(
+    values,
+    touchedFields = {
+      email: true,
+      password: true,
+      repeated_password: true,
+      checked: true,
+    },
+  ) {
+    const errors = {};
+
+    if (touchedFields.email && !regexEmail.test(values.email)) {
+      errors.email = "E-Mail ist unvollständig/inkorrekt.";
+    }
+
+    if (touchedFields.password && !regexPassword.test(values.password)) {
+      errors.password =
+        "Mindestens 10 Zeichen erforderlich: ein Klein- u. ein Großbuchstabe, eine Zahl und ein Sonderzeichen.";
+    }
+
+    if (
+      touchedFields.repeated_password &&
+      values.password !== values.repeated_password
+    ) {
+      errors.notMatch = "Passwörter stimmen nicht überein.";
+    }
+
+    if (touchedFields.checked && !values.checked) {
+      errors.checked = "Bitte akzeptiere die Datenschutzerklärung.";
+    }
+
+    return errors;
+  }
+
+  const disabled = !isFormValid || busy;
+  const keyboardBehavior = Platform.OS === "ios" ? "padding" : "height";
+  const mainAuthStyle = [auth.mainAuth, compact && authCompact.mainAuth];
+  const contentStyle = [
+    auth.mainContentCustomer,
+    compact && authCompact.mainContentCustomer,
+  ];
+  const inputIconStyle = [auth.inputIcon, compact && authCompact.inputIcon];
+  const submitTextStyle = [
+    styles.buttonText,
+    disabled && styles.buttonTextDisabled,
+  ];
+  const PasswordVisibilityIcon = isPasswordTopVisible ? EyeIcon : EyeOffIcon;
+  const RepeatedPasswordVisibilityIcon = isPasswordBottomVisible
+    ? EyeIcon
+    : EyeOffIcon;
+  const passwordVisibilityLabel = isPasswordTopVisible
+    ? "Passwort verstecken"
+    : "Passwort zeigen";
+  const repeatedPasswordVisibilityLabel = isPasswordBottomVisible
+    ? "Wiederholtes Passwort verstecken"
+    : "Wiederholtes Passwort zeigen";
+  const inputsEditable = !busy;
+  const passwordHidden = !isPasswordTopVisible;
+  const repeatedPasswordHidden = !isPasswordBottomVisible;
+  function getInputStyle(name) {
+    return [
+      auth.inputField,
+      compact && authCompact.inputField,
+      focusedField === name && auth.inputFieldFocus,
+    ];
+  }
+  const emailInputStyle = getInputStyle("email");
+  function handleEmailChange(value) {
+    handleChange("email", value);
+  }
+  function handleEmailFocus() {
+    setFocusedField("email");
+  }
+  function handleEmailBlur() {
+    handleBlur("email");
+  }
+  const passwordInputStyle = getInputStyle("password");
+  function handlePasswordChange(value) {
+    handleChange("password", value);
+  }
+  function handlePasswordFocus() {
+    setFocusedField("password");
+  }
+  function handlePasswordBlur() {
+    handleBlur("password");
+  }
+  function setPasswordRef(input) {
+    inputRefs.current.password = input;
+  }
+  const repeatedPasswordInputStyle = getInputStyle("repeated_password");
+  function handleRepeatedPasswordChange(value) {
+    handleChange("repeated_password", value);
+  }
+  function handleRepeatedPasswordFocus() {
+    setFocusedField("repeated_password");
+  }
+  function handleRepeatedPasswordBlur() {
+    handleBlur("repeated_password");
+  }
+  function setRepeatedPasswordRef(input) {
+    inputRefs.current.repeated_password = input;
+  }
+  function focusPassword() {
+    inputRefs.current.password?.focus();
+  }
+  function focusRepeatedPassword() {
+    inputRefs.current.repeated_password?.focus();
+  }
+
+  function handlePasswordVisibility() {
+    togglePasswordVisibilityTop((previous) => !previous);
+  }
+
+  function handleRepeatedPasswordVisibility() {
+    togglePasswordVisibilityBottom((previous) => !previous);
+  }
+
+  function handleConsentChange(checked) {
+    handleChange("checked", checked);
+    setTouched((previous) => ({ ...previous, checked: true }));
+    setFormErrors(
+      validateInput({ ...formValues, checked }, { ...touched, checked: true }),
+    );
+  }
+
+  function getEyeButtonStyle({ pressed }) {
+    return [auth.eyeButton, pressed && auth.pressed];
+  }
+
+  function getSubmitStyle({ pressed }) {
+    return [
+      styles.button,
+      pressed && !disabled && auth.pressed,
+      disabled && styles.buttonDisabled,
+    ];
+  }
+
   return (
     <SafeAreaView style={resets.screen}>
       <ScreenHeader title="" fallbackHref="/quiz/(auth)/login-quiz" />
-      <KeyboardAvoidingView
-        style={resets.screen}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-      >
+      <KeyboardAvoidingView style={resets.screen} behavior={keyboardBehavior}>
         <ScrollView
-          contentContainerStyle={[
-            auth.mainAuth,
-            compact && authCompact.mainAuth,
-          ]}
+          contentContainerStyle={mainAuthStyle}
           keyboardShouldPersistTaps="handled"
         >
-          <View
-            style={[
-              auth.mainContentCustomer,
-              compact && authCompact.mainContentCustomer,
-            ]}
-          >
+          <View style={contentStyle}>
             <View style={auth.formTitle}>
               <Text accessibilityRole="header" style={auth.formTitleName}>
                 Konto erstellen
@@ -167,132 +279,150 @@ export default function CreateAccount() {
                   </Link>
                 </Text>
                 <View style={auth.form}>
-                  {fields.map(({ name, label, placeholder }, index) => {
-                    const isPassword = name !== "email";
-                    const Icon = isPassword ? LockIcon : MailIcon;
-                    const VisibilityIcon = visible[name] ? EyeIcon : EyeOffIcon;
-                    return (
-                      <View key={name} style={auth.inputContainer}>
-                        <Text
-                          nativeID={`create-account-${name}-label`}
-                          style={auth.inputLabel}
-                        >
-                          {label}
-                        </Text>
-                        <TextInput
-                          ref={(input) => {
-                            inputRefs.current[name] = input;
-                          }}
-                          testID={`create-account-${name}`}
-                          accessibilityLabel={label}
-                          accessibilityLabelledBy={`create-account-${name}-label`}
-                          style={[
-                            auth.inputField,
-                            compact && authCompact.inputField,
-                            focusedField === name && auth.inputFieldFocus,
-                          ]}
-                          placeholder={placeholder}
-                          autoComplete={isPassword ? "new-password" : "email"}
-                          keyboardType={
-                            isPassword ? "default" : "email-address"
-                          }
-                          autoCapitalize="none"
-                          autoCorrect={false}
-                          secureTextEntry={isPassword && !visible[name]}
-                          editable={!busy}
-                          value={values[name]}
-                          onChangeText={(value) => {
-                            setValues((previous) => ({
-                              ...previous,
-                              [name]: value,
-                            }));
-                            setMessage("");
-                          }}
-                          onFocus={() => setFocusedField(name)}
-                          onBlur={() => {
-                            setFocusedField(null);
-                            markTouched(name);
-                          }}
-                          returnKeyType={
-                            index === fields.length - 1 ? "done" : "next"
-                          }
-                          submitBehavior={
-                            index === fields.length - 1
-                              ? "blurAndSubmit"
-                              : "submit"
-                          }
-                          onSubmitEditing={() => {
-                            if (index < fields.length - 1)
-                              inputRefs.current[
-                                fields[index + 1].name
-                              ]?.focus();
-                            else handleSubmit();
-                          }}
-                        />
-                        <View
-                          pointerEvents="none"
-                          style={[
-                            auth.inputIcon,
-                            compact && authCompact.inputIcon,
-                          ]}
-                        >
-                          <Icon width={24} height={24} />
-                        </View>
-                        {isPassword && (
-                          <Pressable
-                            testID={`create-account-${name}-visibility`}
-                            accessibilityRole="button"
-                            accessibilityLabel={`${label} ${visible[name] ? "verstecken" : "zeigen"}`}
-                            onPress={() =>
-                              setVisible((previous) => ({
-                                ...previous,
-                                [name]: !previous[name],
-                              }))
-                            }
-                            style={({ pressed }) => [
-                              auth.eyeButton,
-                              pressed && auth.pressed,
-                            ]}
-                          >
-                            <VisibilityIcon width={24} height={24} />
-                          </Pressable>
-                        )}
-                        <Text
-                          accessibilityLiveRegion="polite"
-                          style={auth.warnText}
-                        >
-                          {touched[name] && errors[name]}
-                        </Text>
-                      </View>
-                    );
-                  })}
-                  <View style={auth.checkboxContainer}>
+                  <View style={auth.inputContainer}>
+                    <Text
+                      nativeID="create-account-email-label"
+                      style={auth.inputLabel}
+                    >
+                      Deine E-Mail
+                    </Text>
+                    <TextInput
+                      style={emailInputStyle}
+                      value={formValues.email}
+                      onChangeText={handleEmailChange}
+                      onFocus={handleEmailFocus}
+                      onBlur={handleEmailBlur}
+                      editable={inputsEditable}
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                      autoComplete="email"
+                      keyboardType="email-address"
+                      returnKeyType="next"
+                      submitBehavior="submit"
+                      onSubmitEditing={focusPassword}
+                      testID="create-account-email"
+                      accessibilityLabel="Deine E-Mail"
+                      accessibilityLabelledBy="create-account-email-label"
+                      placeholder="beispielname@email.com"
+                    />
+                    <View pointerEvents="none" style={inputIconStyle}>
+                      <MailIcon width={24} height={24} />
+                    </View>
+                    <Text
+                      accessibilityLiveRegion="polite"
+                      style={auth.warnText}
+                    >
+                      {formErrors.email}
+                    </Text>
+                  </View>
+                  <View style={auth.inputContainer}>
+                    <Text
+                      nativeID="create-account-password-label"
+                      style={auth.inputLabel}
+                    >
+                      Passwort
+                    </Text>
+                    <TextInput
+                      style={passwordInputStyle}
+                      value={formValues.password}
+                      onChangeText={handlePasswordChange}
+                      onFocus={handlePasswordFocus}
+                      onBlur={handlePasswordBlur}
+                      editable={inputsEditable}
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                      ref={setPasswordRef}
+                      autoComplete="new-password"
+                      secureTextEntry={passwordHidden}
+                      returnKeyType="next"
+                      submitBehavior="submit"
+                      onSubmitEditing={focusRepeatedPassword}
+                      testID="create-account-password"
+                      accessibilityLabel="Passwort"
+                      accessibilityLabelledBy="create-account-password-label"
+                      placeholder="Passwort"
+                    />
+                    <View pointerEvents="none" style={inputIconStyle}>
+                      <LockIcon width={24} height={24} />
+                    </View>
                     <Pressable
+                      testID="create-account-password-visibility"
+                      accessibilityRole="button"
+                      accessibilityLabel={passwordVisibilityLabel}
+                      onPress={handlePasswordVisibility}
+                      style={getEyeButtonStyle}
+                    >
+                      <PasswordVisibilityIcon width={24} height={24} />
+                    </Pressable>
+                    <Text
+                      accessibilityLiveRegion="polite"
+                      style={auth.warnText}
+                    >
+                      {formErrors.password}
+                    </Text>
+                  </View>
+                  <View style={auth.inputContainer}>
+                    <Text
+                      nativeID="create-account-repeated_password-label"
+                      style={auth.inputLabel}
+                    >
+                      Wiederhole dein Passwort
+                    </Text>
+                    <TextInput
+                      style={repeatedPasswordInputStyle}
+                      value={formValues.repeated_password}
+                      onChangeText={handleRepeatedPasswordChange}
+                      onFocus={handleRepeatedPasswordFocus}
+                      onBlur={handleRepeatedPasswordBlur}
+                      editable={inputsEditable}
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                      ref={setRepeatedPasswordRef}
+                      autoComplete="new-password"
+                      secureTextEntry={repeatedPasswordHidden}
+                      returnKeyType="done"
+                      submitBehavior="blurAndSubmit"
+                      onSubmitEditing={handleSubmit}
+                      testID="create-account-repeated_password"
+                      accessibilityLabel="Wiederhole dein Passwort"
+                      accessibilityLabelledBy="create-account-repeated_password-label"
+                      placeholder="Wiederhole dein Passwort"
+                    />
+                    <View pointerEvents="none" style={inputIconStyle}>
+                      <LockIcon width={24} height={24} />
+                    </View>
+                    <Pressable
+                      testID="create-account-repeated_password-visibility"
+                      accessibilityRole="button"
+                      accessibilityLabel={repeatedPasswordVisibilityLabel}
+                      onPress={handleRepeatedPasswordVisibility}
+                      style={getEyeButtonStyle}
+                    >
+                      <RepeatedPasswordVisibilityIcon width={24} height={24} />
+                    </Pressable>
+                    <Text
+                      accessibilityLiveRegion="polite"
+                      style={auth.warnText}
+                    >
+                      {formErrors.notMatch}
+                    </Text>
+                  </View>
+                  <View style={auth.checkboxContainer}>
+                    <Checkbox
+                      color={colors.qwPrimary}
                       testID="create-account-checked"
                       accessibilityRole="checkbox"
                       accessibilityLabel="Ich stimme der Datenschutzerklärung zu."
                       accessibilityState={{
-                        checked: values.checked,
+                        checked: formValues.checked,
                         disabled: busy,
                       }}
                       disabled={busy}
                       hitSlop={12}
-                      onPress={() => {
-                        setValues((previous) => ({
-                          ...previous,
-                          checked: !previous.checked,
-                        }));
-                        markTouched("checked");
-                      }}
-                      style={({ pressed }) => [
-                        auth.checkbox,
-                        pressed && auth.pressed,
-                      ]}
-                    >
-                      <Text style={auth.checkboxLabel}>
-                        {values.checked ? "☑" : "☐"}
-                      </Text>
-                    </Pressable>
+                      value={formValues.checked}
+                      onValueChange={handleConsentChange}
+                      style={auth.checkbox}
+                    />
                     <View style={{ flex: 1 }}>
                       <Text style={auth.checkboxLabel}>
                         Ich stimme der{" "}
@@ -305,7 +435,7 @@ export default function CreateAccount() {
                         accessibilityLiveRegion="polite"
                         style={auth.warnText}
                       >
-                        {touched.checked && errors.checked}
+                        {formErrors.checked}
                       </Text>
                     </View>
                   </View>
@@ -326,13 +456,9 @@ export default function CreateAccount() {
                       accessibilityState={{ disabled, busy }}
                       disabled={disabled}
                       onPress={handleSubmit}
-                      style={({ pressed }) => [
-                        styles.button,
-                        pressed && !disabled && auth.pressed,
-                        disabled && styles.buttonDisabled,
-                      ]}
+                      style={getSubmitStyle}
                     >
-                      <Text style={[styles.buttonText, disabled && styles.buttonTextDisabled]}>Weiter</Text>
+                      <Text style={submitTextStyle}>Weiter</Text>
                     </Pressable>
                   </View>
                 </View>

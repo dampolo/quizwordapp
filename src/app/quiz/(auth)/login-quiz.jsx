@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Link, Stack, router } from "expo-router";
+import { Link, router } from "expo-router";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -23,8 +23,9 @@ import EyeOffIcon from "../../../../assets/icons/eye-off.svg";
 import ScreenHeader from "../../../components/ScreenHeader/screen-header";
 
 export default function LoginQuiz() {
+  const initialValues = { email: "", password: "" };
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [formValues, setFormValues] = useState({ email: "", password: "" });
+  const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [focusedField, setFocusedField] = useState(null);
   const [submitting, setSubmitting] = useState(false);
@@ -35,26 +36,23 @@ export default function LoginQuiz() {
   const busy = loading || submitting;
   const PasswordIcon = isPasswordVisible ? EyeIcon : EyeOffIcon;
 
+  function handleChange(name, value) {
+    setFormValues((previousValues) => ({ ...previousValues, [name]: value }));
+  }
+
   async function handleSubmit() {
     if (loading || submittingRef.current) return;
-    const email = formValues.email.trim();
-    const errors = {};
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test(email)) {
-      errors.email = "Deine E-Mail ist unvollständig/inkorrekt.";
-    }
-    if (
-      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%+\-/*?&#])[A-Za-z\d@$!%+\-/*?&#]{10,}$/.test(
-        formValues.password,
-      )
-    ) {
-      errors.password = "Dein Passwort ist nicht korrekt.";
-    }
+    const errors = validate(formValues);
     setFormErrors(errors);
-    if (Object.keys(errors).length) return;
+    if (Object.keys(errors).length > 0) return;
+    await loginWithEmailAndPassword();
+  }
+
+  async function loginWithEmailAndPassword() {
     submittingRef.current = true;
     setSubmitting(true);
     try {
-      const response = await login(email, formValues.password);
+      const response = await login(formValues.email.trim(), formValues.password);
       if (response) router.replace("/my-quiz/all-words");
       else
         setFormErrors({
@@ -71,25 +69,86 @@ export default function LoginQuiz() {
     }
   }
 
+  function validate(values) {
+    const errors = {};
+
+    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+
+    const regexPassword =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%+\-/*?&#])[A-Za-z\d@$!%+\-/*?&#]{10,}$/;
+
+    if (!values.email || !regexEmail.test(values.email.trim())) {
+      errors.email = "Dein E-Mail ist unvollständig/inkorrekt.";
+    }
+
+    if (!values.password || !regexPassword.test(values.password)) {
+      errors.password = "Dein Passwort ist nicht korrekt.";
+    }
+
+    return errors;
+  }
+
+  function handleEmailChange(value) {
+    handleChange("email", value);
+  }
+
+  function handlePasswordChange(value) {
+    handleChange("password", value);
+  }
+
+  function handleEmailFocus() {
+    setFocusedField("email");
+  }
+
+  function handlePasswordFocus() {
+    setFocusedField("password");
+  }
+
+  function handleBlur() {
+    setFocusedField(null);
+  }
+
+  function focusPassword() {
+    passwordRef.current?.focus();
+  }
+
+  function togglePasswordVisibility() {
+    setIsPasswordVisible((visible) => !visible);
+  }
+
+  function getEyeButtonStyle({ pressed }) {
+    return [auth.eyeButton, pressed && auth.pressed];
+  }
+
+  function getSubmitStyle({ pressed }) {
+    return [styles.button, pressed && !busy && auth.pressed, busy && styles.buttonDisabled];
+  }
+
+  const keyboardBehavior = Platform.OS === "ios" ? "padding" : "height";
+  const mainAuthStyle = [auth.mainAuth, compact && authCompact.mainAuth];
+  const contentStyle = [auth.mainContentCustomer, compact && authCompact.mainContentCustomer];
+  const emailInputStyle = [auth.inputField, compact && authCompact.inputField, focusedField === "email" && auth.inputFieldFocus];
+  const passwordInputStyle = [auth.inputField, compact && authCompact.inputField, focusedField === "password" && auth.inputFieldFocus];
+  const inputIconStyle = [auth.inputIcon, compact && authCompact.inputIcon];
+  const submitTextStyle = [styles.buttonText, busy && styles.buttonTextDisabled];
+  const passwordVisibilityLabel = isPasswordVisible ? "Passwort verstecken" : "Passwort zeigen";
+  const passwordHidden = !isPasswordVisible;
+  const inputsEditable = !busy;
+  const passwordError = formErrors.password || formErrors.message;
+
   return (
     <SafeAreaView style={resets.screen}>
-      <ScreenHeader title=""  />
+      <ScreenHeader title="" />
       <KeyboardAvoidingView
         style={resets.screen}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        behavior={keyboardBehavior}
       >
         <ScrollView
-          contentContainerStyle={[
-            auth.mainAuth,
-            compact && authCompact.mainAuth,
-          ]}
+          contentContainerStyle={mainAuthStyle}
           keyboardShouldPersistTaps="handled"
         >
           <View
-            style={[
-              auth.mainContentCustomer,
-              compact && authCompact.mainContentCustomer,
-            ]}
+            style={contentStyle}
           >
             <View style={auth.formTitle}>
               <Text accessibilityRole="header" style={auth.formTitleName}>
@@ -115,30 +174,24 @@ export default function LoginQuiz() {
                   testID="login-email"
                   accessibilityLabel="E-Mail-Adresse"
                   accessibilityLabelledBy="login-email-label"
-                  style={[
-                    auth.inputField,
-                    compact && authCompact.inputField,
-                    focusedField === "email" && auth.inputFieldFocus,
-                  ]}
+                  style={emailInputStyle}
                   placeholder="beispielname@email.com"
                   autoComplete="email"
                   keyboardType="email-address"
                   autoCapitalize="none"
                   autoCorrect={false}
-                  editable={!busy}
+                  editable={inputsEditable}
                   returnKeyType="next"
                   submitBehavior="submit"
                   value={formValues.email}
-                  onChangeText={(email) =>
-                    setFormValues((values) => ({ ...values, email }))
-                  }
-                  onFocus={() => setFocusedField("email")}
-                  onBlur={() => setFocusedField(null)}
-                  onSubmitEditing={() => passwordRef.current?.focus()}
+                  onChangeText={handleEmailChange}
+                  onFocus={handleEmailFocus}
+                  onBlur={handleBlur}
+                  onSubmitEditing={focusPassword}
                 />
                 <View
                   pointerEvents="none"
-                  style={[auth.inputIcon, compact && authCompact.inputIcon]}
+                  style={inputIconStyle}
                 >
                   <MailIcon width={24} height={24} />
                 </View>
@@ -155,44 +208,31 @@ export default function LoginQuiz() {
                   testID="login-password"
                   accessibilityLabel="Passwort"
                   accessibilityLabelledBy="login-password-label"
-                  style={[
-                    auth.inputField,
-                    compact && authCompact.inputField,
-                    focusedField === "password" && auth.inputFieldFocus,
-                  ]}
+                  style={passwordInputStyle}
                   placeholder="Passwort"
                   autoComplete="current-password"
-                  secureTextEntry={!isPasswordVisible}
+                  secureTextEntry={passwordHidden}
                   autoCapitalize="none"
                   autoCorrect={false}
-                  editable={!busy}
+                  editable={inputsEditable}
                   returnKeyType="go"
                   value={formValues.password}
-                  onChangeText={(password) =>
-                    setFormValues((values) => ({ ...values, password }))
-                  }
-                  onFocus={() => setFocusedField("password")}
-                  onBlur={() => setFocusedField(null)}
+                  onChangeText={handlePasswordChange}
+                  onFocus={handlePasswordFocus}
+                  onBlur={handleBlur}
                   onSubmitEditing={handleSubmit}
                 />
                 <View
                   pointerEvents="none"
-                  style={[auth.inputIcon, compact && authCompact.inputIcon]}
+                  style={inputIconStyle}
                 >
                   <LockIcon width={24} height={24} />
                 </View>
                 <Pressable
                   accessibilityRole="button"
-                  accessibilityLabel={
-                    isPasswordVisible
-                      ? "Passwort verstecken"
-                      : "Passwort zeigen"
-                  }
-                  onPress={() => setIsPasswordVisible((visible) => !visible)}
-                  style={({ pressed }) => [
-                    auth.eyeButton,
-                    pressed && auth.pressed,
-                  ]}
+                  accessibilityLabel={passwordVisibilityLabel}
+                  onPress={togglePasswordVisibility}
+                  style={getEyeButtonStyle}
                 >
                   <PasswordIcon width={24} height={24} />
                 </Pressable>
@@ -200,7 +240,7 @@ export default function LoginQuiz() {
                   accessibilityLiveRegion="polite"
                   style={[auth.warnText, auth.warnTxtHight]}
                 >
-                  {formErrors.password || formErrors.message}
+                  {passwordError}
                 </Text>
               </View>
               {busy && <PreLoader />}
@@ -211,12 +251,9 @@ export default function LoginQuiz() {
                   accessibilityState={{ disabled: busy, busy }}
                   disabled={busy}
                   onPress={handleSubmit}
-                  style={({ pressed }) => [
-                    styles.button,
-                    (pressed || busy) && auth.pressed,
-                  ]}
+                  style={getSubmitStyle}
                 >
-                  <Text style={styles.buttonText}>Anmelden</Text>
+                  <Text style={submitTextStyle}>Anmelden</Text>
                 </Pressable>
               </View>
               <Link href="/quiz/(auth)/forgot-password" asChild>
